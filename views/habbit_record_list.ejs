@@ -1,0 +1,17 @@
+<% 
+const pageTitle = '습관 기록'; 
+const container = `
+<h2>아침 운동</h2>
+<table>
+    <thead>
+      <th>아이디</th>
+      <th>습관 기록 내용</th>
+      <th>기록 생성일</th>
+      <th>삭제</th>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <button><a href="/habbit_record_add">기록 추가</a></button>
+`; %> 
+
+<%- include('basic', { pageTitle: pageTitle, container: container }) %>

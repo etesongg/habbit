@@ -1,0 +1,23 @@
+<% 
+const pageTitle = '습관 추가'; 
+const container = `
+<form action="/habbit_add" method="post">
+  <figure>
+    <p>
+      <label for="">습관명</label>
+      <input type="text" name="title" />
+    </p>
+    <p>
+      <label for="">시작일</label>
+      <input type="date" name="startDate" />
+    </p>
+    <p>
+        <label for="">종료일</label>
+        <input type="date" name="endDate" />
+      </p>
+    <button type="submit">저장</button>
+  </figure>
+</form>
+`; %> 
+
+<%- include('basic', { pageTitle: pageTitle, container: container }) %>
