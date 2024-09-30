@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>습관관리 Habit</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+    <style>
+      button > a {
+        text-decoration-line: none;
+        color: white !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h3>습관 기록</h3>
+      <h2>아침 운동</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>습관 기록 내용</th>
+            <th>기록 생성일</th>
+            <th>삭제</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% records.forEach((recode, idx) => { %>
+            <tr>
+              <td><%= idx+1 %></td>
+              <td><%= recode.memo %></td>
+              <td><%= recode.createAt %></td>
+              <td><a href="/habit_delete/<%= recode.id %>" onclick="confirmDelete('<%= recode.createAt %>', '<%= habit_id %>', '<%= recode.id %>');  return false;">삭제</a></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <button><a href="/habit_record_add/<%= habit_id %>">기록 추가</a></button>
+    </div>
+
+    <script>
+      function confirmDelete(recode_createAt, habit_id, recode_id){
+        const confirmation = confirm(`${recode_createAt}일에 기록된 내용을 삭제 하시겠습니까?`)
+        if (confirmation) {
+          window.location.href = `/habit_record_delete/${habit_id}/${recode_id}`; 
+        }
+      }
+    </script>
+  </body>
+</html>

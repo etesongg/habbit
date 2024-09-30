@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>습관관리 Habit</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+    <style>
+      button > a {
+        text-decoration-line: none;
+        color: white !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h3>습관 기록 추가</h3>
+      <form action="/habit_record_add/<%= habit_id %>" method="post">
+        <figure>
+          <p>
+            <label for="">메모</label>
+            <textarea name="memo" id="" rows="5"></textarea>
+          </p>
+
+          <button type="submit">저장</button>
+        </figure>
+      </form>
+    </div>
+  </body>
+</html>
