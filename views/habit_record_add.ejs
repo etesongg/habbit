@@ -8,12 +8,18 @@
         text-decoration-line: none;
         color: white !important;
       }
+
+      h3, a {
+        display: inline-block; 
+        margin-right: 10px; 
+        margin-bottom: 0;
+      }
     </style>
   </head>
   <body>
     <div class="container">
-      <h3>습관 기록 추가</h3>
-      <form action="/habit_record_add/<%= habit_id %>" method="post">
+      <h3>습관 기록 추가</h3><a href="/habit_record_list/<%= user_id %>/<%= habit_id %>">습관 기록 가기</a>
+      <form action="/habit_record_add/<%= user_id %>/<%= habit_id %>" method="post">
         <figure>
           <p>
             <label for="">메모</label>

@@ -8,11 +8,16 @@
         text-decoration-line: none;
         color: white !important;
       }
+
+      h3, a {
+        display: inline-block; 
+        margin-right: 10px; 
+      }
     </style>
   </head>
   <body>
     <div class="container">
-      <h3>습관 목록</h3> 
+      <h3>습관 목록</h3><a href="/logout">로그아웃</a>
       <table>
         <thead>
           <tr>
@@ -27,7 +32,7 @@
           <% habits.forEach((habit, idx) => { %>
             <tr>
               <td><%= idx+1 %></td>
-              <td><a href="/habit_record_list/<%= habit.id %>/<%= habit.record_id %>"><%= habit.name %></a></td> 
+              <td><a href="/habit_record_list/<%= user_id %>/<%= habit.id %>"><%= habit.name %></a></td> 
               <td><%= habit.date %></td>
               <td><%= habit.record_count %></td>
               <td><a href="/habit_delete/<%= user_id %>/<%= habit.id %>" onclick="confirmDelete('<%= habit.name %>', '<%= user_id %>', '<%= habit.id %>'); return false;">삭제</a></td>
