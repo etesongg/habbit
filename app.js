@@ -132,7 +132,16 @@ app.get("/habit_delete/:user_id/:habit_id", (req, res) => {
     if (err) {
       res.status(500).send("html 500 error");
     } else {
-      res.redirect(`/habit_list/${user_id}`);
+      getSql = `
+      DELETE FROM records
+      WHERE habit_id = ${habit_id}`
+      db.run(getSql, (err) => {
+        if(err){
+          res.status(500).send('html 500 error')
+        }else {
+          res.redirect(`/habit_list/${user_id}`);
+        }
+      })
     }
   });
 });
