@@ -1,55 +1,29 @@
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <title>습관관리 Habit</title>
-    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
-    <style>
-      button > a {
-        text-decoration-line: none;
-        color: white !important;
-      }
+<%- contentFor('container') %>
+<h3>습관 목록</h3><a href="/logout">로그아웃</a>
+  <div class="row">
+    <% habits.forEach((habit, idx) => { %>
+      <div class="col-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><%= habit.name %></h5>
+            <h6 class="card-subtitle mb-2 text-muted"><%= habit.date %></h6>
+            <p class="card-text">작성한 기록: <%= habit.record_count %>개</p>
+            <a href="/habit_record_list/<%= user_id %>/<%= habit.id %>" class="card-link">습관 기록하기</a>
+            <a href="/habit_delete/<%= user_id %>/<%= habit.id %>" onclick="confirmDelete('<%= habit.name %>', '<%= user_id %>', '<%= habit.id %>'); return false;" class="card-link">삭제</a>
+          </div>
+        </div>
+      </div>
+    <% }) %> 
+   </div>
 
-      h3, a {
-        display: inline-block; 
-        margin-right: 10px; 
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h3>습관 목록</h3><a href="/logout">로그아웃</a>
-      <table>
-        <thead>
-          <tr>
-            <th>번호</th>
-            <th>습관명</th>
-            <th>시작일-종료일</th>
-            <th>기록 갯수</th>
-            <th>삭제</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% habits.forEach((habit, idx) => { %>
-            <tr>
-              <td><%= idx+1 %></td>
-              <td><a href="/habit_record_list/<%= user_id %>/<%= habit.id %>"><%= habit.name %></a></td> 
-              <td><%= habit.date %></td>
-              <td><%= habit.record_count %></td>
-              <td><a href="/habit_delete/<%= user_id %>/<%= habit.id %>" onclick="confirmDelete('<%= habit.name %>', '<%= user_id %>', '<%= habit.id %>'); return false;">삭제</a></td>
-            </tr>
-          <% }) %> 
-        </tbody>
-      </table>
-      <button><a href="/habit_add/<%= user_id %>">습관 추가</a></button>
-    </div>
+<button class="btn btn-primary"><a href="/habit_add/<%= user_id %>">습관 추가</a></button>
 
-    <script>
-      function confirmDelete(habit_name, user_id, habit_id) {
-        const confirmation = confirm(`습관 기록 내용이 모두 삭제 됩니다. 해당 습관(${habit_name})을 삭제하겠습니까?`)
-        if (confirmation) {
-          window.location.href = `/habit_delete/${user_id}/${habit_id}`; // 삭제 요청 URL로 리다이렉트
-        }
+<%- contentFor('script') %>
+  <script>
+    function confirmDelete(habit_name, user_id, habit_id) {
+      const confirmation = confirm(`습관 기록 내용이 모두 삭제 됩니다. 해당 습관(${habit_name})을 삭제하겠습니까?`)
+      if (confirmation) {
+        window.location.href = `/habit_delete/${user_id}/${habit_id}`; // 삭제 요청 URL로 리다이렉트
       }
-    </script>
-  </body>
-</html>
+    }
+  </script>

@@ -1,6 +1,8 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const expressSession = require("express-session");
+// const ejsExtend = require('express-ejs-extend');
+const layout = require('express-ejs-layouts');
 const app = express();
 const PORT = 3000;
 
@@ -14,11 +16,16 @@ const {
   create_habits_table,
   create_records_table,
 } = require("./models/create_table");
+const { render } = require("ejs");
 
 app.set("view engine", "ejs");
+app.use(express.static("public"));
 app.engine("ejs", require("express-ejs-extend"));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+// app.engine('ejs', ejsExtend);
+app.use(layout);
+app.set('layout', 'layouts/layout')
 
 app.use(
   expressSession({
@@ -35,6 +42,7 @@ app.use(
 // });
 
 let getSql = ``;
+let isRegister = false
 
 app.get("/login", (req, res) => {
   res.render("login");
@@ -52,7 +60,9 @@ app.post("/login", (req, res) => {
     } else {
       if (row) {
         req.session.user = {
-          username: row.id,
+          id: row.id,
+          username: row.username,
+          name: row.name,
           authorized: true,
         };
         res.redirect(`/habit_list/${row.id}`);
@@ -63,8 +73,31 @@ app.post("/login", (req, res) => {
   });
 });
 
-app.get("/register", (req, res) => {
-  res.render("register");
+app.get('/register', (req, res)=> {
+  res.render('register', {isEmailDuplicate: false, message:""})
+})
+
+app.post("/register", (req, res) => {
+  const { name, username, password } = req.body
+  getSql =`
+  SELECT COUNT(1) AS count 
+  FROM users
+  WHERE email = '${username}'`
+  db.get(getSql, (err, row)=> {
+    if(err){
+      res.status(500).send('html 500 error')
+    }else {
+      if (row.count > 0){
+        console.log("이메일 이미 존재")
+        res.render('register', {isEmailDuplicate: true, message: '이미 존재하는 이메일 입니다.'})
+      }else {
+        getSql = `
+        INSERT INTO users(name, email, password) VALUES('${name}','${username}','${password}')`
+        db.run(getSql);
+        res.redirect('/login')
+      }
+    }
+  })
 });
 
 app.get("/logout", (req, res) => {
@@ -131,17 +164,16 @@ app.get("/habit_delete/:user_id/:habit_id", (req, res) => {
   db.run(getSql, (err) => {
     if (err) {
       res.status(500).send("html 500 error");
-    } else {
-      getSql = `
-      DELETE FROM records
-      WHERE habit_id = ${habit_id}`
-      db.run(getSql, (err) => {
-        if(err){
-          res.status(500).send('html 500 error')
-        }else {
-          res.redirect(`/habit_list/${user_id}`);
-        }
-      })
+    }else {
+      if (row.count > 0){
+        res.status(200).send('already habit_id ...')
+      }else {
+        getSql = `
+        DELETE FROM records
+        WHERE habit_id = ${habit_id}`
+        db.run(getSql)
+        res.redirect(`/habit_list/${user_id}`);
+      }
     }
   });
 });

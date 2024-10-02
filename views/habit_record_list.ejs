@@ -1,27 +1,4 @@
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <title>습관관리 Habit</title>
-    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
-    <style>
-      button > a {
-        text-decoration-line: none;
-        color: white !important;
-      }
-
-      h3, a {
-        display: inline-block; 
-        margin-right: 10px; 
-      }
-      
-      h2 {
-        margin: 0;
-      }
-
-    </style>
-  </head>
-  <body>
-    <div class="container">
+<%- contentFor('container') %>
       <h3>습관 기록</h3><a href="/habit_list/<%= user_id %>">습관 목록 가기</a>
       <h2>아침 운동</h2>
       <table>
@@ -39,21 +16,20 @@
               <td><%= idx+1 %></td>
               <td><%= record.memo %></td>
               <td><%= record.createAt %></td>
-              <td><a href="/habit_delete/<%= record.id %>" onclick="confirmDelete('<%= record.createAt %>', '<%= habit_id %>', '<%= record.id %>');  return false;">삭제</a></td>
+              <td><a href="/habit_delete/<%= record.id %>" onclick="confirmDelete('<%= record.createAt %>', '<%= habit_id %>', '<%= record.id %>'); return false;">삭제</a></td>
             </tr>
           <% }) %>
         </tbody>
       </table>
-      <button><a href="/habit_record_add/<%= user_id %>/<%= habit_id %>">기록 추가</a></button>
+      <button class="btn btn-primary"><a href="/habit_record_add/<%= user_id %>/<%= habit_id %>">기록 추가</a></button>
     </div>
 
-    <script>
-      function confirmDelete(record_createAt, habit_id, record_id){
-        const confirmation = confirm(`${record_createAt}일에 기록된 내용을 삭제 하시겠습니까?`)
-        if (confirmation) {
-          window.location.href = `/habit_record_delete/${habit_id}/${record_id}`; 
-        }
-      }
-    </script>
-  </body>
-</html>
+<%- contentFor('script') %>
+<script>
+  function confirmDelete(record_createAt, habit_id, record_id){
+    const confirmation = confirm(`${record_createAt}일에 기록된 내용을 삭제 하시겠습니까?`)
+    if (confirmation) {
+      window.location.href = `/habit_record_delete/${habit_id}/${record_id}`; 
+    }
+  }
+</script>
