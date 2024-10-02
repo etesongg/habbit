@@ -48,12 +48,16 @@ app.post("/login", (req, res) => {
   WHERE email = '${username}' AND password = '${password}'`;
   db.get(getSql, (err, row) => {
     if (err) {
-      return res.status(500).send("html 500 error");
+      res.status(500).send("html 500 error");
     } else {
       if (row) {
-        return res.redirect(`/habit_list/${row.id}`);
+        req.session.user = {
+          username: row.id,
+          authorized: true,
+        };
+        res.redirect(`/habit_list/${row.id}`);
       } else {
-        return res.status(401).send("로그인에 실패했습니다.");
+        res.status(401).send("로그인에 실패했습니다.");
       }
     }
   });
@@ -64,20 +68,24 @@ app.get("/register", (req, res) => {
 });
 
 app.get("/logout", (req, res) => {
-  const { user } = req.session;
-  if (user) {
-    user = null;
-  }
-  res.redirect("/login");
+  try{
+    req.session.destroy(()=>{
+        const username = req.session?.user?.username;
+        console.log(username,' 로그아웃');
+        res.redirect("/login");
+    });
+    }catch(error){
+        console.error('session logout error:', error);
+        res.status(500).json({ message: '로그아웃 오류' });
+    }
 });
 
 app.get("/habit_list/:user_id", (req, res) => {
   const { user_id } = req.params;
   const { user } = req.session;
-  if (user) {
-    res.render("habit_list");
-  } else {
-    res.redirect("/login");
+
+  if (!user) {
+    return res.redirect("/login");
   }
 
   getSql = `
