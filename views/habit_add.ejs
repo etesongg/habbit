@@ -1,8 +1,9 @@
 <%- contentFor('container') %>
 <div class="container">
   <div>
-    <header>
+    <header class="habit-add-header">
       <h1 class="login-header-h1 habit-add-h1">습관 추가</h1>
+      <a href="/habit_list/<%= user_id %>" class="habit-list-a">HABIT LIST</a>
     </header>
   <form action="/habit_add/<%= user_id %>" method="post" class="login-Form">
     <figure>
@@ -18,11 +19,10 @@
           <label for="">종료일</label>
           <input type="date" name="end_date" />
         </div>
-      <button type="submit">저장</button>
+      <button type="submit">SAVE</button>
     </figure>
   </form>
   </div>
-
 </div>
 
 <%- contentFor('script') %>

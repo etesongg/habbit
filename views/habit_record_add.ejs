@@ -1,15 +1,18 @@
 <%- contentFor('container') %>
-
-<h3>습관 기록 추가</h3><a href="/habit_record_list/<%= user_id %>/<%= habit_id %>">습관 기록 가기</a>
+<div class="container">
+  <div>
+    <header class="habit-add-header">
+      <h3>습관 기록 추가</h3>
+      <a href="/habit_record_list/<%= user_id %>/<%= habit_id %>">RECORD LIST</a>
+    </header>
 <form action="/habit_record_add/<%= user_id %>/<%= habit_id %>" method="post">
   <figure>
-    <p>
-      <label for="">메모</label>
-      <textarea name="memo" id="" rows="5"></textarea>
-    </p>
-
-    <button type="submit">저장</button>
+    <div class="form-group">
+      <textarea name="memo" id="" rows="6"></textarea>
+    </div>
+    <button type="submit">SAVE</button>
   </figure>
 </form>
-
+</div>
+</div>
 <%- contentFor('script') %>

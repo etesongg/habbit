@@ -98,6 +98,10 @@ tr > td {
   padding: 10px;
 }
 
+textarea {
+  width: 360;
+}
+
 input {
   background-color: var(--basic-theme);
   border: 1px solid var(--line);
@@ -290,4 +294,19 @@ td > a:hover {
 
 .h3 {
   margin-right: 3px;
+}
+
+/* habit-add, habit-record-add */
+.habit-add-header {
+  display: flex;
+  align-items: center;
+}
+.habit-add-header > a {
+  margin: 0px 3px;
+  color: black;
+  font-size: 15px;
+}
+
+.habit-add-header > a:hover {
+  text-decoration-line: none;
 }
