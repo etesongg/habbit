@@ -1,57 +1,293 @@
+:root {
+  --basic-theme: #f2f2f2;
+  --line: #bbbbbb;
+  --second-bg: #dddddd;
+  --secondary-color: #2ecc71;
+  --error-color: #e74c3c;
+}
+
 @font-face {
-  font-family: 'Pretendard-Regular';
-  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
+  font-family: "Pretendard-Regular";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+}
+@font-face {
+  font-family: "Pretendard-Bold";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff")
+    format("woff");
+}
+@font-face {
+  font-family: "Pretendard-Black";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Black.woff")
+    format("woff");
+}
+
+@font-face {
+  font-family: "Paperlogy-8ExtraBold";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2")
+    format("woff2");
+}
+@font-face {
+  font-family: "Paperlogy-6SemiBold";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-6SemiBold.woff2")
+    format("woff2");
+}
+@font-face {
+  font-family: "Paperlogy-5Medium";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-4Regular.woff2")
+    format("woff2");
+}
+@font-face {
+  font-family: "Paperlogy-4Regular";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-4Regular.woff2")
+    format("woff2");
 }
 
 body {
-  font-family: 'Pretendard-Regular';
-  background-color: #eeeeee;
+  font-family: "Paperlogy-6SemiBold", sans-serif;
+  background-color: var(--basic-theme);
+}
+
+h1 {
+  font-family: "Paperlogy-8ExtraBold", sans-serif;
+  font-size: 30px;
+}
+
+button {
+  width: 360px;
+  height: 45px;
+  background-color: black;
+  color: white;
+  font-family: "Paperlogy-4Regular";
+  font-size: 13px;
 }
 
 button > a {
-    text-decoration-line: none;
-    color: white;
-  }
+  text-decoration-line: none;
+  color: white;
+}
 
 button > a:visited {
   color: white;
 }
 
-h3, a {
-  display: inline-block; 
+button:hover,
+button > a:hover {
+  text-decoration: underline;
+  text-shadow: 0 0 0 white;
+}
+
+h3,
+a {
+  display: inline-block;
 }
 
 h3 {
-  margin-right: 10px;
+  margin-right: 6px;
 }
 
 h2 {
   margin: 0;
 }
 
+tbody > tr {
+  padding: 20px;
+}
+tr > td {
+  font-family: "Paperlogy-5Medium";
+  padding: 10px;
+}
+
+input {
+  background-color: var(--basic-theme);
+  border: 1px solid var(--line);
+}
+
+input::placeholder {
+  color: var(--line);
+}
+
+span > a {
+  text-decoration-line: none;
+}
+
+#alert-span {
+  font-family: "Paperlogy-5Medium";
+  background-color: var(--second-bg);
+  position: absolute;
+  text-align: center;
+  z-index: 2;
+  height: 30px;
+  width: 200px;
+  font-size: 12px;
+  padding-top: 5px;
+}
+
 .container {
   margin-top: 5%;
-}
-
-.card {
-  position:relative;
+  display: flex;
   justify-content: center;
   align-items: center;
-
-  width: 18rem; 
-  height: 18rem;
-  margin: 20px;
-  border-radius: 25px;
 }
-.card:hover {
-  box-shadow: 10px 5px 5px black;
+.habit-container {
+  margin: 5%;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+}
+
+/* login, register */
+.login-main-div,
+.register-main-div {
+  display: flex;
+}
+
+.login-header-h1,
+.register-header-h1 {
+  margin: 0;
+}
+
+.login-Form,
+.register-Form {
+  width: 300px;
+}
+
+.login-div,
+.register-div {
+  width: 350px;
+  height: 335px;
+  padding: 40px 0px;
+}
+
+.login-div > form > button {
+  margin-top: 30px;
+}
+
+.register-div > form > button {
+  margin-top: 30px;
+}
+
+.login-wrap,
+.register-wrap {
+  padding: 80px 43px 0px;
+}
+
+.form-group {
+  padding: 0px 0px 15px;
+  position: relative;
+}
+
+.form-group > label {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.form-group > input {
+  width: 360px;
+  height: 45px;
+  padding: 0px 12px;
+  font-size: 14px;
+}
+
+.singup {
+  font-size: 9px;
+}
+
+/* habit_list */
+.card {
+  background-color: var(--basic-theme);
+  position: relative;
+  width: 220px;
+  height: 220px;
+  margin: 20px;
 }
 .card-body {
-  position:absolute;
+  position: absolute;
+  font-size: 13px;
+  width: 220px;
+  height: 220px;
+}
+.card-body > a {
+  color: black;
+}
+.card-body > a:hover {
+  text-decoration-line: none;
 }
 
-.loginForm {
-  width: 300px;
+td > a:hover {
+  color: black;
+}
+
+.habit-add-button {
+  width: 150px;
+}
+
+.logout-a {
+  font-size: 10px;
+}
+
+.card-title {
+  font-size: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.tooltip {
+  top: 13%;
+  left: 20%;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  white-space: normal;
+  visibility: hidden;
+  word-wrap: break-word;
+  opacity: 0;
+  z-index: 999;
+  border-radius: 5px;
+  padding: 0px 3px;
+}
+.card-title:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.card-subtitle {
+  font-size: 14px;
+}
+
+/* habit_add */
+.habit-add-h1 {
+  margin-bottom: 10px;
+}
+
+/* habit_record_list */
+.habit-record-add-button {
+  width: 150px;
+}
+
+.table-div {
+  margin-top: 35px;
+}
+
+.habit-list-a {
+  color: black;
+  margin-right: 3px;
+}
+.habit-list-a:hover {
+  text-decoration-line: none;
+  color: black;
+}
+
+td > a {
+  color: black;
+}
+td > a:hover {
+  text-decoration-line: none;
+}
+
+.table {
+  margin-top: 5px;
+}
+
+.h3 {
+  margin-right: 3px;
 }

@@ -1,31 +1,40 @@
 <%- contentFor('container') %>
-      <h3>회원가입</h3> 
-      <form action="/register" method="post">
-        <figure>
-          <p>
-            <label for="">이름</label>
-            <input type="text" name="name" />
-          </p>
-          <p>
-            <label for="">아이디</label>
-            <input type="text" name="username" />
-            <label for="" ></label>
-          </p>
-          <p>
-            <label for="">비밀번호</label>
-            <input type="password" name="password" />
-          </p>
-          <button type="submit" class="btn btn-primary" >회원가입</button>
-        </figure>
+<div class="container">
+<div class="register-main-div">
+  <div class="register-wrap">
+    <header>
+      <h1 class="register-header-h1">REGISTRATION</h1>
+      <h1 class="register-header-h1">HABIT.TIME</h1>
+    </header>
+    <div class="register-div">
+      <form action="/register" method="post" class="register-Form">
+        <div class="form-group">
+          <label>YOUR NAME</label>
+          <input name="name" type="text" placeholder="Your Name" value="<%= name %>">
+        </div>
+        <div class="form-group">
+          <label>EMAIL ADDRESS</label>
+          <input name="username" type="email" placeholder="Email Address" value="<%= username %>">
+          <span id="alert-span" style="display: <%= isEmailDuplicate ? 'block' : 'none' %>;">
+            <%= message %>
+          </span>
+        </div>
+        <div class="form-group">
+          <label>PASSWORD</label>
+          <input name="password" type="password" placeholder="Password" value="<%= password %>">
+        </div>
+        <button type="submit">REGISTER NOW</button> 
+        <span class="singup">ALREADY HAVE AN ACCOUNT? <a href="/login">Login now</a></span>
       </form>
-      <div id="emailAlert" class="alert alert-primary" role="alert" style="display: <%= isEmailDuplicate ? 'block' : 'none' %>;">
-        <%= message %>
-      </div>
+  </div>
+  </div>
+</div>
+</div>
 
 <%- contentFor('script') %>
 <script>
   window.onload = function() {
-    const alertBox = document.getElementById('emailAlert');
+    const alertBox = document.getElementById('alert-span');
     
     if (alertBox.style.display === 'block') {
       setTimeout(function() {

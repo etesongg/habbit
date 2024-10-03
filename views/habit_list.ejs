@@ -1,14 +1,20 @@
 <%- contentFor('container') %>
-<h3>습관 목록</h3><a href="/logout">로그아웃</a>
+<div class="habit-container">
+<h3>습관 목록</h3><a class="logout-a" href="/logout">LOGOUT</a>
   <div class="row">
     <% habits.forEach((habit, idx) => { %>
       <div class="col-3">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title"><%= habit.name %></h5>
-            <h6 class="card-subtitle mb-2 text-muted"><%= habit.date %></h6>
+            <h5 class="card-title">
+              <%= habit.name %>
+              <span class="tooltip"><%= habit.name %></span>
+            </h5>
+            <h6 class="card-subtitle mb-2 text-muted"><%= habit.start_date %> - </h6>
+            <h6 class="card-subtitle mb-2 text-muted"><%= habit.end_date %></h6>
+            <br>
             <p class="card-text">작성한 기록: <%= habit.record_count %>개</p>
-            <a href="/habit_record_list/<%= user_id %>/<%= habit.id %>" class="card-link">습관 기록하기</a>
+            <a href="/habit_record_list/<%= user_id %>/<%= habit.id %>">습관 기록하기</a>
             <a href="/habit_delete/<%= user_id %>/<%= habit.id %>" onclick="confirmDelete('<%= habit.name %>', '<%= user_id %>', '<%= habit.id %>'); return false;" class="card-link">삭제</a>
           </div>
         </div>
@@ -16,7 +22,8 @@
     <% }) %> 
    </div>
 
-<button class="btn btn-primary"><a href="/habit_add/<%= user_id %>">습관 추가</a></button>
+<button class="habit-add-button"><a href="/habit_add/<%= user_id %>">ADD HABIT</a></button>
+</div>
 
 <%- contentFor('script') %>
   <script>

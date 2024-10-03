@@ -1,35 +1,41 @@
 <%- contentFor('container') %>
-      <h3>습관 기록</h3><a href="/habit_list/<%= user_id %>">습관 목록 가기</a>
-      <h2>아침 운동</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>번호</th>
-            <th>습관 기록 내용</th>
-            <th>기록 생성일</th>
-            <th>삭제</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% records.forEach((record, idx) => { %>
+<div class="habit-container">
+      <h3 class="h3">습관 기록</h3>
+      <a href="/habit_list/<%= user_id %>" class="habit-list-a">HABIT LIST</a> 
+      <a class="logout-a" href="/logout">LOGOUT</a>
+      <div class="table-div">
+        <h2>아침 운동</h2>
+        <table class="table">
+          <thead>
             <tr>
-              <td><%= idx+1 %></td>
-              <td><%= record.memo %></td>
-              <td><%= record.createAt %></td>
-              <td><a href="/habit_delete/<%= record.id %>" onclick="confirmDelete('<%= record.createAt %>', '<%= habit_id %>', '<%= record.id %>'); return false;">삭제</a></td>
+              <th scope="col" class="text-center align-middle">#</th>
+              <th scope="col">습관 기록 내용</th>
+              <th scope="col">기록 생성일</th>
+              <th scope="col">삭제</th>
             </tr>
-          <% }) %>
-        </tbody>
-      </table>
-      <button class="btn btn-primary"><a href="/habit_record_add/<%= user_id %>/<%= habit_id %>">기록 추가</a></button>
+          </thead>
+          <tbody>
+            <% records.forEach((record, idx) => { %>
+              <tr>
+                <td scope="row" class="text-center align-middle"><%= idx+1 %></td>
+                <td><%= record.memo %></td>
+                <td><%= record.createAt %></td>
+                <td><a href="/habit_record_delete/<%= user_id %>/<%= habit_id %>/<%= record.id %>" onclick="confirmDelete('<%= record.createAt %>', '<%= user_id %>', '<%= habit_id %>', '<%= record.id %>'); return false;">삭제</a></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+      <button class="habit-record-add-button"><a href="/habit_record_add/<%= user_id %>/<%= habit_id %>">ADD RECORD</a></button>
     </div>
+</div>
 
 <%- contentFor('script') %>
 <script>
-  function confirmDelete(record_createAt, habit_id, record_id){
+  function confirmDelete(record_createAt, user_id, habit_id, record_id){
     const confirmation = confirm(`${record_createAt}일에 기록된 내용을 삭제 하시겠습니까?`)
     if (confirmation) {
-      window.location.href = `/habit_record_delete/${habit_id}/${record_id}`; 
+      window.location.href = `/habit_record_delete/${user_id}/${habit_id}/${record_id}`; 
     }
   }
 </script>

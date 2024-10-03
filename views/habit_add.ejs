@@ -1,22 +1,28 @@
 <%- contentFor('container') %>
+<div class="container">
+  <div>
+    <header>
+      <h1 class="login-header-h1 habit-add-h1">습관 추가</h1>
+    </header>
+  <form action="/habit_add/<%= user_id %>" method="post" class="login-Form">
+    <figure>
+      <div class="form-group">
+        <label for="">습관명</label>
+        <input type="text" name="habit_name" />
+      </div>
+      <div class="form-group">
+        <label for="">시작일</label>
+        <input type="date" name="start_date" />
+      </div>
+      <div class="form-group">
+          <label for="">종료일</label>
+          <input type="date" name="end_date" />
+        </div>
+      <button type="submit">저장</button>
+    </figure>
+  </form>
+  </div>
 
-<h3>습관 추가</h3> 
-<form action="/habit_add/<%= user_id %>" method="post">
-  <figure>
-    <p>
-      <label for="">습관명</label>
-      <input type="text" name="habit_name" />
-    </p>
-    <p>
-      <label for="">시작일</label>
-      <input type="date" name="start_date" />
-    </p>
-    <p>
-        <label for="">종료일</label>
-        <input type="date" name="end_date" />
-      </p>
-    <button type="submit">저장</button>
-  </figure>
-</form>
+</div>
 
 <%- contentFor('script') %>
