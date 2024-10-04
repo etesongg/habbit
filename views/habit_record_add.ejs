@@ -7,7 +7,8 @@
     </header>
 <form action="/habit_record_add/<%= user_id %>/<%= habit_id %>" method="post">
   <figure>
-    <div class="form-group">
+    <div class="flex-column">
+      <label for="">습관 메모</label>
       <textarea name="memo" id="" rows="6"></textarea>
     </div>
     <button type="submit">SAVE</button>

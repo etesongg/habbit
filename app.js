@@ -53,10 +53,10 @@ app.post("/login", (req, res) => {
   getSql = `
   SELECT id
   FROM users
-  WHERE email = '${username}' AND password = '${password}'`;
-  db.get(getSql, (err, row) => {
+  WHERE email = ? AND password = ?`;
+  db.get(getSql, [username, password],(err, row) => {
     if (err) {
-      res.render("error", { error: "HTML 500 ERROR" });
+      res.render("error",  { error: "HTML 500 ERROR" });
     } else {
       if (row) {
         req.session.user = {
@@ -88,8 +88,8 @@ app.post("/register", (req, res) => {
   getSql = `
   SELECT COUNT(1) AS count 
   FROM users
-  WHERE email = '${username}'`;
-  db.get(getSql, (err, row) => {
+  WHERE email = ?`;
+  db.get(getSql, [username],(err, row) => {
     if (err) {
       res.render("error", { error: "HTML 500 ERROR" });
     } else {
@@ -104,8 +104,8 @@ app.post("/register", (req, res) => {
         });
       } else {
         getSql = `
-        INSERT INTO users(name, email, password) VALUES('${name}','${username}','${password}')`;
-        db.run(getSql);
+        INSERT INTO users(name, email, password) VALUES(?, ?, ?)`;
+        db.run(getSql, [name, username, password]);
         res.redirect("/login");
       }
     }
@@ -138,9 +138,9 @@ app.get("/habit_list/:user_id", (req, res) => {
     FROM users u 
     JOIN habits h ON u.id = h.user_id 
     LEFT JOIN records r ON r.habit_id = h.id 
-    WHERE u.id = ${user_id}
+    WHERE u.id = ?
     GROUP BY h.id, h.habit_name, h.start_date, h.end_date`;
-  db.all(getSql, (err, rows) => {
+  db.all(getSql, [user_id], (err, rows) => {
     if (err) {
       res.render("error", { error: "HTML 500 ERROR" });
     } else {
@@ -159,8 +159,8 @@ app.post("/habit_add/:user_id", (req, res) => {
   const { user_id } = req.params;
   const { habit_name, start_date, end_date } = req.body;
   getSql = `
-    INSERT INTO habits(habit_name, start_date, end_date, user_id) VALUES ('${habit_name}', '${start_date}', '${end_date}', '${user_id}')`;
-  db.run(getSql, (err) => {
+    INSERT INTO habits(habit_name, start_date, end_date, user_id) VALUES (?,?,?,?)`;
+  db.run(getSql, [habit_name, start_date, end_date, user_id], (err) => {
     if (err) {
       res.render("error", { error: "HTML 500 ERROR" });
     } else {
@@ -172,8 +172,8 @@ app.post("/habit_add/:user_id", (req, res) => {
 app.get("/habit_delete/:user_id/:habit_id", (req, res) => {
   const { user_id, habit_id } = req.params;
   getSql = `
-    DELETE FROM habits WHERE id = ${habit_id}`;
-  db.run(getSql, (err, row) => {
+    DELETE FROM habits WHERE id = ?`;
+  db.run(getSql, [habit_id],(err, row) => {
     if (err) {
       res.render("error", { error: "HTML 500 ERROR" });
     } else {
@@ -193,8 +193,8 @@ app.get("/habit_record_list/:user_id/:habit_id", (req, res) => {
   FROM records r
   JOIN habits h
   ON r.habit_id = h.id
-  WHERE r.habit_id = ${habit_id}`;
-  db.all(getSql, (err, rows) => {
+  WHERE r.habit_id = ?`;
+  db.all(getSql, [habit_id],(err, rows) => {
     if (err) {
       res.render("error", { error: "HTML 500 ERROR" });
     } else {
@@ -217,8 +217,8 @@ app.post("/habit_record_add/:user_id/:habit_id", (req, res) => {
   const { memo } = req.body;
   getSql = `
     INSERT INTO records(memo, habit_id) 
-    VALUES('${memo}','${habit_id}')`;
-  db.run(getSql, (err) => {
+    VALUES(?,?)`;
+  db.run(getSql, [memo, habit_id],(err) => {
     if (err) {
       res.render("error", { error: "HTML 500 ERROR" });
     } else {
@@ -230,8 +230,8 @@ app.post("/habit_record_add/:user_id/:habit_id", (req, res) => {
 app.get("/habit_record_delete/:user_id/:habit_id/:record_id", (req, res) => {
   const { user_id, habit_id, record_id } = req.params;
   getSql = `
-    DELETE FROM records WHERE id = ${record_id}`;
-  db.run(getSql, (err) => {
+    DELETE FROM records WHERE id = ?`;
+  db.run(getSql, [record_id], (err) => {
     if (err) {
       res.render("error", { error: "HTML 500 ERROR" });
     } else {

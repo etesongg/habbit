@@ -90,12 +90,12 @@ h2 {
   margin: 0;
 }
 
-tbody > tr {
-  padding: 20px;
-}
 tr > td {
   font-family: "Paperlogy-5Medium";
-  padding: 10px;
+  padding: 20px !important;
+}
+tr > th {
+  padding: 20px !important;
 }
 
 textarea {
@@ -201,15 +201,16 @@ span > a {
 .card {
   background-color: var(--basic-theme);
   position: relative;
-  width: 220px;
+  width: 260px;
   height: 220px;
   margin: 20px;
 }
 .card-body {
   position: absolute;
   font-size: 13px;
-  width: 220px;
+  width: 260px;
   height: 220px;
+  border: 1px solid black;
 }
 .card-body > a {
   color: black;
@@ -309,4 +310,13 @@ td > a:hover {
 
 .habit-add-header > a:hover {
   text-decoration-line: none;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 15px;
+}
+.flex-column > label {
+  margin-bottom: 10px;
 }
