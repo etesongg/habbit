@@ -259,6 +259,16 @@ td > a:hover {
   font-size: 14px;
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.pagination > a {
+  margin-right: 2px;
+  color: black;
+}
+
 /* habit_add */
 .habit-add-h1 {
   margin-bottom: 10px;

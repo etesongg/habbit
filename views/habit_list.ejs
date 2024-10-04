@@ -23,6 +23,16 @@
    </div>
 
 <button class="habit-add-button"><a href="/habit_add/<%= user_id %>">ADD HABIT</a></button>
+
+<div class="pagination">
+  <% if (currentPage > 1){%>
+  <a href="/habit_list/<%= user_id %>?page=<%=currentPage - 1%>">이전</a>
+  <% } %> <% for (let i=1; i<= totalPage; i++) {%>
+  <a href="/habit_list/<%= user_id %>?page=<%=i%>"><%=i%></a>
+  <% } %> <% if (currentPage < totalPage){%>
+  <a href="/habit_list/<%= user_id %>?page=<%=currentPage + 1%>">다음</a>
+  <% } %>
+</div>
 </div>
 
 <%- contentFor('script') %>

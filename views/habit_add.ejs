@@ -3,7 +3,7 @@
   <div>
     <header class="habit-add-header">
       <h3 >습관 추가</h3>
-      <a href="/habit_list/<%= user_id %>" class="habit-list-a">HABIT LIST</a>
+      <a href="/habit_list/<%= user_id %>?page=<%= currentPage%>" class="habit-list-a">HABIT LIST</a>
     </header>
   <form action="/habit_add/<%= user_id %>" method="post" class="login-Form">
     <figure>

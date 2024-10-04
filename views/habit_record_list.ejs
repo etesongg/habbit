@@ -1,7 +1,7 @@
 <%- contentFor('container') %>
 <div class="habit-container">
       <h3 class="h3">습관 기록</h3>
-      <a href="/habit_list/<%= user_id %>" class="habit-list-a">HABIT LIST</a> 
+      <a href="/habit_list/<%= user_id %>?page=<%= currentPage%>" class="habit-list-a">HABIT LIST</a> 
       <a class="logout-a" href="/logout">LOGOUT</a>
       <div class="table-div">
         <h2>아침 운동</h2>

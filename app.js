@@ -129,30 +129,55 @@ app.get("/habit_list/:user_id", (req, res) => {
   const { user_id } = req.params;
   const { user } = req.session;
 
+  let page = req.query.page ? parseInt(req.query.page) : 1;
+  const limit = 8;
+  const offset = (page - 1) * limit;
+
   if (!user) {
     return res.redirect("/login");
   }
 
   getSql = `
-    SELECT h.id, h.habit_name AS "name", h.start_date, h.end_date , COUNT(r.id) AS record_count, MAX(r.id) AS "record_id"
-    FROM users u 
-    JOIN habits h ON u.id = h.user_id 
-    LEFT JOIN records r ON r.habit_id = h.id 
-    WHERE u.id = ?
-    GROUP BY h.id, h.habit_name, h.start_date, h.end_date`;
-  db.all(getSql, [user_id], (err, rows) => {
+    SELECT h.id, h.habit_name AS name, h.start_date, h.end_date, 
+           COUNT(r.id) AS record_count, MAX(r.id) AS record_id,
+           (SELECT COUNT(1) FROM habits WHERE user_id = ?) AS total
+    FROM habits h
+    LEFT JOIN records r ON r.habit_id = h.id
+    WHERE h.user_id = ?
+    GROUP BY h.id, h.habit_name, h.start_date, h.end_date
+    ORDER BY h.id
+    LIMIT ? OFFSET ?`;
+
+  db.all(getSql, [user_id, user_id, limit, offset], (err, rows) => {
     if (err) {
-      res.render("error", { error: "HTML 500 ERROR" });
+      return res.render("error", { error: "HTML 500 ERROR" });
+    }
+
+    if (rows.length > 0) {
+      const total = rows[0].total; 
+      const totalPage = Math.ceil(total / limit);
+
+      res.render("habit_list", {
+        habits: rows,
+        currentPage: page,
+        totalPage: totalPage,
+        user_id: user_id,
+      });
     } else {
-      const habits = rows;
-      res.render("habit_list", { habits: habits, user_id: user_id });
+      res.render("habit_list", {
+        habits: [],
+        currentPage: page,
+        totalPage: 0,
+        user_id: user_id,
+      });
     }
   });
 });
 
+
 app.get("/habit_add/:user_id", (req, res) => {
   const { user_id } = req.params;
-  res.render("habit_add", { user_id: user_id });
+  res.render("habit_add", { user_id: user_id, currentPage: 1, });
 });
 
 app.post("/habit_add/:user_id", (req, res) => {
@@ -202,6 +227,7 @@ app.get("/habit_record_list/:user_id/:habit_id", (req, res) => {
         records: rows,
         user_id: user_id,
         habit_id: habit_id,
+        currentPage: 1,
       });
     }
   });
